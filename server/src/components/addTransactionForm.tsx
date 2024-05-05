@@ -51,7 +51,7 @@ export function AddTransactionForm({onNewTransaction}:{onNewTransaction?: (trans
                 notify({status: 'Warning', text: 'Failed to create transaction'});
             }
         });
-    }, [notify, setTransactionCount]);
+    }, [notify, setTransactionCount, onNewTransaction]);
     return <Form onSubmit={handleFormSubmit}>
         <InputGroup>
             <InputGroup.Text className="w-25">Trip</InputGroup.Text>
@@ -283,7 +283,7 @@ export function AddTransactionFormRow({onNewTransaction, form: maybeForm}:{onNew
                 notify({status: 'Warning', text: 'Failed to create transaction'});
             }
         });
-    }, [notify, setTransactionCount]);
+    }, [notify, setTransactionCount, onNewTransaction]);
 
     useEffect(() => {
         if( maybeForm ){

@@ -61,7 +61,7 @@ export function useApi<T>(resource: string, deps: any[]): T[] {
         const abortController = new AbortController();
         fetchApi<T[]>(url, abortController).then(dt => setData(dt || []));
         return () => abortController.abort();
-    }, [url, ...deps]);
+    }, [url, deps]);
 
     return data;
 }
