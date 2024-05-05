@@ -21,6 +21,9 @@ export const initializeDb = async () => {
         });
         await _dataSource.initialize();
     }
+    if( !_dataSource.isInitialized ){
+        await _dataSource.initialize();
+    }
     return _dataSource;
 };
 

@@ -40,7 +40,6 @@ export async function fetchTransactions(user?: string, trip?: string){
 }
 
 export function useApiTransactions(user?: string, trip?: string){
-    const router = useRouter();
     const [data, setData] = useState<Transaction[]>([]);
 
     useEffect(() => {
@@ -61,7 +60,7 @@ export function useApi<T>(resource: string, deps: any[]): T[] {
         const abortController = new AbortController();
         fetchApi<T[]>(url, abortController).then(dt => setData(dt || []));
         return () => abortController.abort();
-    }, [url, deps]);
+    }, [url, ...deps]);
 
     return data;
 }
