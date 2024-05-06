@@ -26,11 +26,11 @@ export const getServerSideProps: GetServerSideProps<{trip: Trip}> = async (conte
 
 export default function TripStatisticsPage({trip}: {trip: Trip}) {
     const transactions = useApiTransactions(undefined, trip.id);
-    const payers = transactions.map((t) => t.payer?.showName!).reduce((acc, cur) => {
+    const parcels = transactions.flatMap((t) => t.parcels!);
+    const payers = parcels.flatMap((p) => [p.payer?.showName!, p.payee?.showName!]).reduce((acc, cur) => {
         cur in acc ? acc[cur] += 1 : acc[cur] = 1;
         return acc;
     }, {} as {[key: string]: number});
-    const parcels = transactions.flatMap((t) => t.parcels!);
     return <>
         <Alert variant="info" className="d-flex">
             <h5>Show statistics for trip {trip.showName} <small>({trip.tripname})</small></h5>
