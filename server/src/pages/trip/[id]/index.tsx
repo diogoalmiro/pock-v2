@@ -27,7 +27,7 @@ export const getServerSideProps: GetServerSideProps<{trip: Trip}> = async (conte
 
 export default function TripTablePage({trip}: {trip: Trip}) {
     return <NotificationProvider>
-        <Alert variant="info" className="d-flex">
+        <Alert variant="info" className="d-flex m-0">
             <h5>Show transactions for trip {trip.showName} <small>({trip.tripname})</small></h5>
             <Link href={`${trip.id}/statistics`}><Calculator/> Stats</Link>
             <Link href=".." className="ms-auto"><CloseButton/></Link>

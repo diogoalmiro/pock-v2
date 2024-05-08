@@ -32,7 +32,7 @@ export default function TripStatisticsPage({trip}: {trip: Trip}) {
         return acc;
     }, {} as {[key: string]: number});
     return <>
-        <Alert variant="info" className="d-flex">
+        <Alert variant="info" className="d-flex m-0">
             <h5>Show statistics for trip {trip.showName} <small>({trip.tripname})</small></h5>
             <Link href={`../${trip.id}`} className="ms-auto"><CloseButton/></Link>
         </Alert>

@@ -72,3 +72,50 @@ export function useApiUsers(deps: any[]){
 export function useApiTrips(deps: any[]){
     return useApi<Trip>('trips', deps);
 }
+
+export function newTransaction(trip: string, payer: string, payees: string[], amount: number, description: string, date: string){
+    return fetch('/api/transactions', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({trip, payer, payees, amount, description, date})
+    }).then(r => {
+        if( r.ok ){
+            return r.json();
+        }
+        else{
+            throw new Error(`Failed to create transaction (${r.status})`);
+        }
+    });
+}
+
+export function updateTransaction(id: string, trip: string, payer: string, payees: string[], amount: number, description: string, date: string){
+    return fetch(`/api/transactions/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({trip, payer, payees, amount, description, date})
+    }).then(r => {
+        if( r.ok ){
+            return r.json() as Transaction;
+        }
+        else{
+            throw new Error(`Failed to update transaction (${r.status})`);
+        }
+    });
+}
+
+export function deleteTransaction(id: string){
+    return fetch(`/api/transactions/${id}`, {
+        method: 'DELETE'
+    }).then(r => {
+        if( r.ok ){
+            return r.json();
+        }
+        else{
+            throw new Error(`Failed to delete transaction (${r.status})`);
+        }
+    });
+}

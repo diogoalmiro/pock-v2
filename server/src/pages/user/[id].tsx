@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps<{user: User}> = async (conte
 
 export default function UserTablePage({user}: {user: User}) {
     return <NotificationProvider>
-        <Alert variant="info" className="d-flex">
+        <Alert variant="info" className="d-flex m-0">
             <h5 className="m-0">Show transactions for user {user.showName} <small>({user.username})</small></h5>
             <Link href=".." className="ms-auto"><CloseButton/></Link>
         </Alert>

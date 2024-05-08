@@ -12,7 +12,7 @@ export const NotificationContext = createContext<{
 } | null>(null);
 
 export function useNotifications() {
-    return useContext(NotificationContext);
+    return useContext(NotificationContext) || {notify: (msg: any) => {console.warn("Notification provider not found", msg)}};
 }
 
 export function NotificationProvider({children}: {children: ReactNode}) {

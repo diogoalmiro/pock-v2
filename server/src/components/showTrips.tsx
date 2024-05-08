@@ -1,20 +1,18 @@
-import { Col } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { useApiTrips } from "./api";
 import Link from "next/link";
 
 
-export function ShowTrips() {
-    const trips = useApiTrips([]);
-
+export function ShowTrips({trips}: {trips: Trip[]}) {
     return (
         <>
             {trips.map((trip) => (
-                <Col key={trip.id}>
+                <Row key={trip.id}>
                     <Link href={`/trip/${trip.id}`}>
-                        <h4>{trip.showName} <small className="text-muted">({trip.tripname})</small></h4>
+                        <p>{trip.showName} <small className="text-muted">({trip.tripname})</small></p>
                     </Link>
                     <p>{trip.description}</p>
-                </Col>
+                </Row>
             ))}
         </>
     );

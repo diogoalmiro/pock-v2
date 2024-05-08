@@ -20,7 +20,7 @@ const amounts = [
 ].map(a => ({label: a, value: parseFloat(a)}));
 
 export function AddTransactionForm({onNewTransaction}:{onNewTransaction?: (transaction: Transaction) => void}){
-    const {notify} = useNotifications() || {notify: (msg: any) => {console.warn('Notify not available', msg)}};
+    const {notify} = useNotifications();
     const [transactionCount, setTransactionCount] = useState(0);
     const handleFormSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -122,7 +122,7 @@ export function AddTransactionForm({onNewTransaction}:{onNewTransaction?: (trans
 }
 
 export function EditTransactionForm({transaction, onEditTransaction}:{transaction: Transaction | null, onEditTransaction?: (transaction: any) => void}){
-    const {notify} = useNotifications() || {notify: (msg: any) => {console.warn('Notify not available', msg)}};
+    const {notify} = useNotifications();
     const handleFormSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         let form = e.currentTarget;
@@ -228,7 +228,7 @@ export function EditTransactionForm({transaction, onEditTransaction}:{transactio
 }
 
 export function DeleteTransactionForm({transaction, onDeleteTransaction}:{transaction: Transaction | null, onDeleteTransaction?: (transaction: any) => void}){
-    const {notify} = useNotifications() || {notify: (msg: any) => {console.warn('Notify not available', msg)}};
+    const {notify} = useNotifications();
     const handleFormSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         fetch(`/api/transactions/${transaction?.id}`, {
@@ -251,7 +251,7 @@ export function DeleteTransactionForm({transaction, onDeleteTransaction}:{transa
 }
 
 export function AddTransactionFormRow({onNewTransaction, form: maybeForm}:{onNewTransaction: (trn: any) => void, form: HTMLFormElement | null}){
-    const {notify} = useNotifications() || {notify: (msg: any) => {console.warn('Notify not available', msg)}};
+    const {notify} = useNotifications();
     const [transactionCount, setTransactionCount] = useState(0);
 
     const handleFormSubmit = useCallback((e: SubmitEvent) => {
