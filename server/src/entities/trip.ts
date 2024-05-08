@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, Unique, Check, BaseEntity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Unique, Check, BaseEntity, OneToMany } from 'typeorm';
+import { TransactionEntity } from './transaction';
 
 @Entity("trip")
 export class TripEntity extends BaseEntity implements Trip {
@@ -25,4 +26,7 @@ export class TripEntity extends BaseEntity implements Trip {
         nullable: true,
     })
     description?: string;
+
+    @OneToMany(() => TransactionEntity, (transaction) => transaction.trip)
+    transactions?: Transaction[];
 }

@@ -9,3 +9,10 @@ export class TripCreateDto {
     @IsNotEmpty()
     showName?: string;
 }
+
+
+export class TripUpdateDto extends TripCreateDto {
+    @IsString()
+    @IsNotEmpty()
+    id: string = "";
+}

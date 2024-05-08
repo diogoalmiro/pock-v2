@@ -119,3 +119,16 @@ export function deleteTransaction(id: string){
         }
     });
 }
+
+export function deleteTrip(id: string){
+    return fetch(`/api/trips/${id}`, {
+        method: 'DELETE'
+    }).then(r => {
+        if( r.ok ){
+            return r.json() as Trip;
+        }
+        else{
+            throw new Error(`Failed to delete trip (${r.status})`);
+        }
+    });
+}

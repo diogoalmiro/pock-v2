@@ -110,7 +110,7 @@ export function EditTransactionCard({transaction, onNewTransaction, onUpdatedTra
 
     const enabledAdd = user && payees.length >= 0 && trip && amount && description;
     
-    return <Card className="my-1">
+    return <Card className="my-1 d-print-none">
         <Card.Body className="row">
             <div className="col-6">
                 <div>

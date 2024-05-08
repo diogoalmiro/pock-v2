@@ -22,7 +22,7 @@ export default function IndexPage(){
     }, [users, trips]);
 
     return <NotificationProvider>
-        <Container>
+        <Container className="mw-md-75">
             <Alert variant="info" className="m-0">
                 <h5 className="m-0">Welcome to the trip calculator</h5>
                 <ul>

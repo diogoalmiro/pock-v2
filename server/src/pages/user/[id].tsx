@@ -1,7 +1,7 @@
 import { useParams } from "next/navigation";
 import { NotificationProvider } from "@/components/notification";
 import TransactionsTable from "@/components/transactionsTable";
-import { Alert, CloseButton } from "react-bootstrap";
+import { Alert, CloseButton, Container } from "react-bootstrap";
 import { UserEntity } from "@/entities/user";
 import { GetServerSideProps } from "next";
 import { initializeDb } from "@/core/db";
@@ -30,6 +30,8 @@ export default function UserTablePage({user}: {user: User}) {
             <h5 className="m-0">Show transactions for user {user.showName} <small>({user.username})</small></h5>
             <Link href=".." className="ms-auto"><CloseButton/></Link>
         </Alert>
-        <TransactionsTable user={user.id} />
+        <Container className="mw-md-75">
+            <TransactionsTable user={user.id} />
+        </Container>
     </NotificationProvider>
 }
