@@ -31,51 +31,65 @@ export default function TripStatisticsPage({trip}: {trip: Trip}) {
         cur in acc ? acc[cur] += 1 : acc[cur] = 1;
         return acc;
     }, {} as {[key: string]: number});
+
+    const cumulativeAmountData = Object.keys(payers).map((payer) => ({
+        type: 'scatter',
+        x: parcels.map((_p, i) => i).concat([parcels.length]),
+        y: parcels.reduce((acc, cur) => {
+            let valToPush = acc[acc.length - 1];
+            if (cur.payer?.showName === payer && cur.payee?.showName === payer) valToPush += cur.amount!;
+            if (cur.payer?.showName === payer) valToPush -= cur.amount!;
+            acc.push(valToPush);
+            return acc;
+        }, [0] as number[]),
+        name: payer + ' (cumulative)',
+        legendgroup: payer,
+        xaxis: 'x',
+        yaxis: 'y1',
+    }));
+    const balanceData = Object.keys(payers).map((payer) => ({
+        type: 'scatter',
+        x: parcels.map((_p, i) => i).concat([parcels.length]),
+        y: parcels.reduce((acc, cur) => {
+            let valToPush = acc[acc.length - 1];
+            if (cur.payer?.showName === payer) valToPush -= cur.amount!;
+            if (cur.payee?.showName === payer) valToPush += cur.amount!;
+            acc.push(valToPush);
+            return acc;
+        }, [0] as number[]),
+        name: payer + ' (balance)',
+        xaxis: 'x',
+        yaxis: 'y2',
+        legendgroup: payer,
+    }));
     return <>
         <Alert variant="info" className="d-flex m-0">
             <h5>Show statistics for trip {trip.showName} <small>({trip.tripname})</small></h5>
             <Link href={`../${trip.id}`} className="ms-auto"><CloseButton/></Link>
         </Alert>
-        <Plot 
+        <Plot
+            style={{width: '100%', minHeight: '400px', height: '75vh'}}
             data={[
-                {
-                    type: 'bar',
-                    x: transactions.map((t) => t.payer?.showName!),
-                    y: transactions.map((t) => t.amount!),
+                ...cumulativeAmountData,
+                ...balanceData,
+            ] as Plotly.Data[]}
+            layout={{
+                grid: {rows: 2, columns: 1, pattern: 'coupled'},
+                xaxis: { visible: false },
+                legend: {
+                    x: 0,
+                    y: 0,
+                    orientation: 'h',
+                },
+                margin: {
+                    l: 50,
+                    r: 20,
+                    t: 20,
+                    b: 50,
+                    pad: 20,
                 }
-            ]}
-            layout={{title: 'Payer vs Amount'}}
-        />
-        <Plot
-            layout={{title: 'Commulative Amount per Payer'}}
-            data={Object.keys(payers).map((payer) => ({
-                type: 'scatter',
-                x: transactions.map((_t, i) => i).concat([transactions.length]),
-                y: transactions.reduce((acc, cur) => {
-                    if (cur.payer?.showName !== payer){
-                        acc.push(acc[acc.length - 1]);
-                        return acc;
-                    }
-                    acc.push((acc[acc.length - 1]) + cur.amount!);
-                    return acc;
-                }, [0] as number[]),
-                name: payer,
-            }))}
-        />
-        <Plot
-            layout={{title: 'Balance per Payer'}}
-            data={Object.keys(payers).map((payer) => ({
-                type: 'scatter',
-                x: parcels.map((_p, i) => i).concat([parcels.length]),
-                y: parcels.reduce((acc, cur) => {
-                    let valToPush = acc[acc.length - 1];
-                    if( cur.payer?.showName === payer ) valToPush -= cur.amount!;
-                    if( cur.payee?.showName === payer ) valToPush += cur.amount!;
-                    acc.push(valToPush);
-                    return acc;
-                }, [0] as number[]),
-                name: payer,
-            }))}
+            }}
+            config={{responsive: true, autosizable: true}}
         />
     </>
 }
