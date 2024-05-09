@@ -9,4 +9,4 @@ if [ -f pid.txt ]; then
   kill -9 $(cat pid)
 fi
 
-nohup npm run start > /dev/null 2>&1 & echo $! > pid
+nohup npm run start > /tmp/pock 2>&1 & echo $! > pid
