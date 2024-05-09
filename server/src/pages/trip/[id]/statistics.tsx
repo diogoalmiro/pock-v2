@@ -34,11 +34,12 @@ export default function TripStatisticsPage({trip}: {trip: Trip}) {
 
     const cumulativeAmountData = Object.keys(payers).map((payer) => ({
         type: 'scatter',
-        x: parcels.map((_p, i) => i).concat([parcels.length]),
-        y: parcels.reduce((acc, cur) => {
+        x: transactions.map((_t, i) => i).concat([transactions.length]),
+        y: transactions.reduce((acc, cur) => {
             let valToPush = acc[acc.length - 1];
-            if (cur.payer?.showName === payer && cur.payee?.showName === payer) valToPush += cur.amount!;
-            if (cur.payer?.showName === payer) valToPush -= cur.amount!;
+            cur.parcels?.forEach((p) => {
+                if (p.payer?.showName === payer && p.payee?.showName !== payer) valToPush -= p.amount!;
+            });
             acc.push(valToPush);
             return acc;
         }, [0] as number[]),
@@ -49,11 +50,13 @@ export default function TripStatisticsPage({trip}: {trip: Trip}) {
     }));
     const balanceData = Object.keys(payers).map((payer) => ({
         type: 'scatter',
-        x: parcels.map((_p, i) => i).concat([parcels.length]),
-        y: parcels.reduce((acc, cur) => {
+        x: transactions.map((_t, i) => i).concat([transactions.length]),
+        y: transactions.reduce((acc, cur) => {
             let valToPush = acc[acc.length - 1];
-            if (cur.payer?.showName === payer) valToPush -= cur.amount!;
-            if (cur.payee?.showName === payer) valToPush += cur.amount!;
+            cur.parcels?.forEach((p) => {
+                if (p.payer?.showName === payer) valToPush += p.amount!;
+                if (p.payee?.showName === payer) valToPush -= p.amount!;
+            });
             acc.push(valToPush);
             return acc;
         }, [0] as number[]),
