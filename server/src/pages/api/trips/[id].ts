@@ -49,8 +49,8 @@ export default async function TripsApiIdHandler(req: NextApiRequest, res: NextAp
         if( !trip ){
             return res.status(404).json({ message: 'Trip not found' });
         }
-        await dt.transaction(async (manager) => {
-            await manager.save(TripEntity, {
+        return await dt.transaction(async (manager) => {
+            return await manager.save(TripEntity, {
                 ...trip,
                 ...updateTrip,
             });

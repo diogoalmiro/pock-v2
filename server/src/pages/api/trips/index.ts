@@ -43,7 +43,7 @@ export default async function TripsApiIndexHandler(req: NextApiRequest, res: Nex
         },{
             tripname: Like(`${Trip.replace(/%/g, '\\%').replace(/_/g, '\\_')}%`)
         }]);
-        res.json(await TripEntity.find({ where }));
+        return res.json(await TripEntity.find({ where }));
     }
     
     if( req.method === 'POST' ){

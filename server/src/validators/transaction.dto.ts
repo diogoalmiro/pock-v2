@@ -1,5 +1,5 @@
 import { Transform, Type } from "class-transformer";
-import { ArrayMinSize, IsArray, IsDate, IsDateString, IsNotEmpty, IsPositive, IsString, Matches, Min, MinLength, ValidateIf } from "class-validator";
+import { ArrayMinSize, IsArray, IsDate, IsDateString, IsNegative, IsNotEmpty, IsPositive, IsString, Matches, Min, MinLength, ValidateIf } from "class-validator";
 
 export class TransactionCreateDto {
     @IsString()
@@ -17,7 +17,6 @@ export class TransactionCreateDto {
     @IsNotEmpty({each: true})
     payees: string[] = [];
 
-    @IsPositive()
     @Type(() => Number)
     amount: number = 0;
 

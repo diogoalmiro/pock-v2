@@ -37,9 +37,10 @@ export function TransactionCard({transaction, onEdit, onDelete}: TransactionRowP
             </div>
             <div className="d-flex mt-1">
                 <span className="mx-2" onClick={() => setSeePayees((v) => (!v))}>{transaction.parcels?.length} <People /></span>
-                {seePayees && payerParticipation && <span key={transaction.payer?.id} className="mx-2">{transaction.payer?.showName} <small className="text-success"><ChevronUp /> {intl.format(payerParticipation)}</small></span>}
+                {seePayees && payerParticipation && payerParticipation > 0 && <span key={transaction.payer?.id} className="mx-2">{transaction.payer?.showName} <small className="text-success"><ChevronUp /> {intl.format(payerParticipation)}</small></span>}
+                {seePayees && payerParticipation && payerParticipation < 0 && <span key={transaction.payer?.id} className="mx-2">{transaction.payer?.showName} <small className="text-danger"><ChevronDown /> {intl.format(payerParticipation)}</small></span>}
                 {seePayees && transaction.parcels?.map(({payee, amount}) => {
-                    let amountNode = <small className="text-danger"><ChevronDown /> {intl.format(amount!)}</small>
+                    let amountNode = !amount || amount > 0 ? <small className="text-success"><ChevronUp /> {intl.format(amount!)}</small> : <small className="text-danger"><ChevronDown /> {intl.format(amount!)}</small>;
                     if( payee?.id === transaction.payer?.id ){
                         return null
                     }

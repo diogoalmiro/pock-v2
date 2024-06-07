@@ -42,7 +42,7 @@ export default async function UsersApiIndexHandler(req: NextApiRequest, res: Nex
         },{
             username: Like(`${user.replace(/%/g, '\\%').replace(/_/g, '\\_')}%`)
         }]);
-        res.json(await UserEntity.find({ where }));
+        return res.json(await UserEntity.find({ where }));
     }
     
     if( req.method === 'POST' ){
